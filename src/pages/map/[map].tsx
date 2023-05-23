@@ -18,8 +18,8 @@ export const getStaticProps: GetStaticProps = async ({ params }: any) => {
       {
         accidents_range_date(
           args: {
-            startDate: "2013-01-01T02:10:00"
-            endDate: "2013-01-01T03:10:00"
+            startDate: "2013-01-01T00:00:00"
+            endDate: "2013-02-31T00:00:00"
           }
         ) {
           DATA_HORA

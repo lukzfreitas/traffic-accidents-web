@@ -1,13 +1,13 @@
 import Coordinate from '@/app/models/coordinate';
 import { HeatmapLayerF } from '@react-google-maps/api';
+import { useEffect, useState } from 'react';
 
-interface Props {
-  data?: Coordinate[];
+interface Props {  
+  data: Coordinate[];
   gradient?: string[];
 }
 
 const HeatMap = ({
-  data = [],
   gradient = [
     'rgba(0, 255, 255, 0)',
     'rgba(0, 255, 255, 1)',
@@ -24,17 +24,29 @@ const HeatMap = ({
     'rgba(191, 0, 31, 1)',
     'rgba(255, 0, 0, 1)',
   ],
-  ..._
+  ...props
 }: Props) => {
-  return (
+  const [data, setData]: [google.maps.LatLng[], Function] = useState([]);  
+  const [heatmap, setHeatmap]: [google.maps.visualization.HeatmapLayer, Function] = useState(new google.maps.visualization.HeatmapLayer());
+
+  useEffect(() => {
+    setData(props.data.map(
+      (item) =>
+        new google.maps.LatLng(item.getLatitude(), item.getLongitude()),
+    ));    
+    if (heatmap) {
+      heatmap.setData(data);
+      heatmap.setOptions({gradient});      
+    }
+  }, [data, gradient, heatmap, props.data]);
+
+  return (    
     <HeatmapLayerF
-      data={data.map(
-        (item) =>
-          new google.maps.LatLng(item.getLatitude(), item.getLongitude()),
-      )}
+      data={data}
       options={{
         gradient,
       }}
+      onLoad={(value: google.maps.visualization.HeatmapLayer) => setHeatmap(value)}
     />
   );
 };
