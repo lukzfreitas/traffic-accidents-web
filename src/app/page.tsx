@@ -1,14 +1,8 @@
 'use client';
-import Link from 'next/link';
+import MapScreen from '@/app/components/map-screen';
 
 const Home = () => {
-  const title = 'Mapa config';  
-
-  return (
-    <>
-      <Link href={`/map/${title}`}>link</Link>      
-    </>
-  );
+  return <MapScreen />;
 };
 
 export default Home;
