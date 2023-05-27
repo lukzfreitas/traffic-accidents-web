@@ -1,6 +1,6 @@
 import Coordinate from '@/app/models/coordinate';
 import { HeatmapLayerF } from '@react-google-maps/api';
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 
 interface Props {  
   data: Coordinate[];
@@ -34,17 +34,20 @@ const HeatMap = ({
       (item) =>
         new google.maps.LatLng(item.getLatitude(), item.getLongitude()),
     ));    
+    console.log(data);
     if (heatmap) {
       heatmap.setData(data);
       heatmap.setOptions({gradient});      
     }
-  }, [data, gradient, heatmap, props.data]);
+  }, [props.data]);
 
   return (    
     <HeatmapLayerF
       data={data}
       options={{
         gradient,
+        // opacity: 0.6,
+        // radius: 20
       }}
       onLoad={(value: google.maps.visualization.HeatmapLayer) => setHeatmap(value)}
     />
