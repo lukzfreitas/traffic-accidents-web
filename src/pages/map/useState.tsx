@@ -18,6 +18,7 @@ export const useMap = (props: Props) => {
 
   useEffect(() => {
     getRangeDateAccidents();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const getRangeDateAccidents = async () => {
@@ -31,19 +32,19 @@ export const useMap = (props: Props) => {
     setLoading(false);
   };
 
-  const handleAccidents = () => {
-    while (date < endDate) {
-      const newDate = new Date(date);
-      newDate.setDate(newDate.getDate() + 1);
-      let result = accidentsData.filter(
-        (item) => item.getDatetime() <= newDate,
-      );
-      if (result.length > 0) {
-        setAccidents(result);
-      }
-      setDate(newDate);
-    }
-  };
+  // const handleAccidents = () => {
+  //   while (date < endDate) {
+  //     const newDate = new Date(date);
+  //     newDate.setDate(newDate.getDate() + 1);
+  //     let result = accidentsData.filter(
+  //       (item) => item.getDatetime() <= newDate,
+  //     );
+  //     if (result.length > 0) {
+  //       setAccidents(result);
+  //     }
+  //     setDate(newDate);
+  //   }
+  // };
 
   return { accidents, loading };
 };
