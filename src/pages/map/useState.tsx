@@ -48,3 +48,5 @@ export const useMap = (props: Props) => {
 
   return { accidents, loading };
 };
+
+export default useMap;
