@@ -5,8 +5,6 @@ import { useEffect, useState } from 'react';
 interface Props {
   startDate: Date;
   endDate: Date;
-  skip: number;
-  take: number;
 }
 
 export const useMap = (props: Props) => {
@@ -17,23 +15,20 @@ export const useMap = (props: Props) => {
   const [loading, setLoading]: [boolean, Function] = useState(false);
   const [date, setDate]: [Date, Function] = useState(props.startDate);
   const [endDate, setEndDate]: [Date, Function] = useState(props.endDate);
-  const [skip, setSkip]: [number, Function] = useState(props.skip);
-  const [take, setTake]: [number, Function] = useState(props.take);
 
-  useEffect(() => {    
+  useEffect(() => {
     getRangeDateAccidents();
   }, []);
 
   const getRangeDateAccidents = async () => {
     setLoading(true);
-    const result = await rangeDate(date, endDate, skip, take);
+    const data = await rangeDate(date, endDate, 0, 100);
     setAccidents(
-      result.sort(
+      data.sort(
         (a, b) => a.getDatetime().getDate() - b.getDatetime().getDate(),
       ),
     );
     setLoading(false);
-    // handleAccidents()
   };
 
   const handleAccidents = () => {
