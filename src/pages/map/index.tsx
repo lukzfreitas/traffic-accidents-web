@@ -1,7 +1,7 @@
 'use client';
 import HeatMap from '@/app/components/google-maps/heat-map';
 import Map from '@/app/components/google-maps/map';
-import { useMap } from './useState';
+import useMap from './useState';
 
 const MapPage = () => {
   const { accidents, loading } = useMap({
