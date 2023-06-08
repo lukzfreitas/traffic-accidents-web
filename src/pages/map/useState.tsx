@@ -18,6 +18,7 @@ export const useMap = (props: Props) => {
 
   useEffect(() => {
     getRangeDateAccidents();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const getRangeDateAccidents = async () => {
