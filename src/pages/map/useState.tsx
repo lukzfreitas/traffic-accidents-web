@@ -7,7 +7,7 @@ interface Props {
   endDate: Date;
 }
 
-export const useMap = (props: Props) => {
+const useMap = (props: Props) => {
   const [accidentsData, setAccidentsData]: [Accident[], Function] = useState(
     [],
   );
