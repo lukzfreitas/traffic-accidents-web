@@ -1,4 +1,4 @@
-import MapPage from "@/pages/map";
+import MapPage from "@/pages/home";
 
 const Home = () => { 
 
