@@ -1,20 +1,22 @@
 import { gql } from '@apollo/client';
 import apolloClient from './apolloClient';
 import Accident from '../models/accident';
+import moment from 'moment';
 
 export const rangeDate = async (
   startDate: Date,
   endDate: Date,
   skip: number,
   take: number,
-): Promise<Accident[]> => {
+): Promise<any[]> => {
+  console.log(moment(startDate).format('YYYY-MM-DDTHH:mm:ss'));
   const response = await apolloClient.query({
     query: gql`
       {
         accidents_range_date(
           args: {
-            startDate: "2013-01-01T00:00:00"
-            endDate: "2013-06-31T00:00:00"
+            startDate: "${moment(startDate).format('YYYY-MM-DDTHH:mm:ss')}"
+            endDate: "${moment(endDate).format('YYYY-MM-DDTHH:mm:ss')}"
             skip: ${skip}
             take: ${take}
           }
@@ -27,6 +29,7 @@ export const rangeDate = async (
         }
       }
     `,
-  });  
-  return response.data.accidents_range_date.map((item: any) => new Accident(item));
+  });
+  const data: any[] = response.data.accidents_range_date;
+  return data.map(item => new Accident(item));
 };

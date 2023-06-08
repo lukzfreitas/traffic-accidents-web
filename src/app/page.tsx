@@ -1,8 +1,10 @@
-'use client';
-import MapScreen from '@/app/components/map-screen';
+import MapPage from "@/pages/map";
 
-const Home = () => {
-  return <MapScreen />;
+const Home = () => { 
+
+  return (
+    <MapPage  />
+  );
 };
 
 export default Home;
