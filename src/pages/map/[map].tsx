@@ -1,7 +1,7 @@
 import { GetServerSideProps } from 'next';
 import MapPage from './map';
 import { rangeDate } from '@/app/utils/api';
-import DateCustom from '@/app/models/date';
+import nookies from 'nookies';
 
 const MapPageProps: any = (props: {
   data: any;
@@ -10,21 +10,15 @@ const MapPageProps: any = (props: {
 }) => MapPage(props);
 
 export const getServerSideProps: GetServerSideProps = async (context: any) => {
-  const startDate = new DateCustom({date: context.query.startDate});
-  const endDate = new DateCustom({date: context.query.endDate});
-  const data: any = await rangeDate(
-    startDate.toString(),
-    endDate.toString(),
-    0,
-    200,
-  );
+  const cookies = nookies.get(context);
+  const data: any = await rangeDate(cookies.startDate, cookies.endDate, 0, 200);
 
   if (data) {
     return {
       props: {
         data,
-        startDate: startDate.toString(),
-        endDate: endDate.toString(),
+        startDate: cookies.startDate,
+        endDate: cookies.endDate,
       },
     };
   }
