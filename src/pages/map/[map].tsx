@@ -1,50 +1,40 @@
-import apolloClient from '@/app/utils/apolloClient';
-import { gql } from '@apollo/client';
-import { GetStaticPaths, GetStaticProps } from 'next';
-import MapScreen from './map';
+import { GetServerSideProps } from 'next';
+import MapPage from './map';
+import { rangeDate } from '@/app/utils/api';
+import DateCustom from '@/app/models/date';
 
-const MapPage: any = ({ accidents, title }: any) => MapScreen(accidents, title);
+const MapPageProps: any = (props: {
+  data: any;
+  startDate: string;
+  endDate: string;
+}) => MapPage(props);
 
-export const getStaticPaths: GetStaticPaths = () => {
-  return {
-    paths: [],
-    fallback: 'blocking',
-  };
-};
+export const getServerSideProps: GetServerSideProps = async (context: any) => {
+  const startDate = new DateCustom({date: context.query.startDate});
+  const endDate = new DateCustom({date: context.query.endDate});
+  const data: any = await rangeDate(
+    startDate.toString(),
+    endDate.toString(),
+    0,
+    200,
+  );
 
-export const getStaticProps: GetStaticProps = async ({ params }: any) => {
-  const { data } = await apolloClient.query({
-    query: gql`
-      {
-        accidents_range_date(
-          args: {
-            startDate: "2013-01-01T02:10:00"
-            endDate: "2013-01-01T03:10:00"
-          }
-        ) {
-          DATA_HORA
-          TEMPO
-          REGIAO
-          LATITUDE
-          LONGITUDE
-        }
-      }
-    `,
-  });
   if (data) {
     return {
       props: {
-        accidents: data.accidents_range_date,
-        title: params.map,
+        data,
+        startDate: startDate.toString(),
+        endDate: endDate.toString(),
       },
     };
   }
   return {
     props: {
-      accidents: {},
-      title: '',
+      data: {},
+      startDate: '',
+      endDate: '',
     },
   };
 };
 
-export default MapPage;
+export default MapPageProps;

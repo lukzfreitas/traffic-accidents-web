@@ -1,6 +1,6 @@
 import Coordinate from './coordinate';
 
-export default class Accident {
+export default class Info {
   private datetime: any;
 
   private latLng: Coordinate;
