@@ -1,4 +1,4 @@
-import Accident from '@/app/models/accident';
+import Info from '@/app/models/info';
 import { rangeDate } from '@/app/utils/accidentApi';
 import { useEffect, useState } from 'react';
 
@@ -8,10 +8,10 @@ interface Props {
 }
 
 const useMap = (props: Props) => {
-  const [accidentsData, setAccidentsData]: [Accident[], Function] = useState(
+  const [accidentsData, setAccidentsData]: [Info[], Function] = useState(
     [],
   );
-  const [accidents, setAccidents]: [Accident[], Function] = useState([]);
+  const [accidents, setAccidents]: [Info[], Function] = useState([]);
   const [loading, setLoading]: [boolean, Function] = useState(false);
   const [date, setDate]: [Date, Function] = useState(props.startDate);
   const [endDate, setEndDate]: [Date, Function] = useState(props.endDate);
