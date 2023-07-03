@@ -1,7 +1,7 @@
 import { gql } from '@apollo/client';
 import apolloClient from './apolloClient';
-import Accident from '../models/accident';
 import moment from 'moment';
+import Info from '../models/info';
 
 export const rangeDate = async (
   startDate: Date,
@@ -31,5 +31,5 @@ export const rangeDate = async (
     `,
   });
   const data: any[] = response.data.accidents_range_date;
-  return data.map(item => new Accident(item));
+  return data.map(item => new Info(item));
 };
