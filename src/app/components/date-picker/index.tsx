@@ -20,7 +20,7 @@ const DatePickerCustom = ({
       locale={pt}
       dateFormat={'dd/MM/yyyy'}
       selected={date.getDate()}
-      onChange={(value: Date) => {
+      onChange={(value: Date) => {        
         onChangeDate(value);
         onChangeDateEvent(new DateCustom({ date: value }));
       }}

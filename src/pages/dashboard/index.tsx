@@ -4,7 +4,7 @@ import { Row } from '@/app/components/grid/row';
 import { Input } from '@/app/components/input';
 import Link from 'next/link';
 import DateCustom from '@/app/models/date';
-import UseDashboarPage from './useState';
+import UseDashboarPage from '../../app/utils/hooks/dashboard/useState';
 
 const DashboardPage = () => {
   const {
@@ -12,19 +12,10 @@ const DashboardPage = () => {
     titleInput,
     startDate,
     endDate,
-    startDateFormat,
-    endDateFormat,
     setTitle,
     onChangeStartDate,
     onChangeEndDate,
-  } = UseDashboarPage({
-    startDateProps: new DateCustom({
-      dateCustom: { day: 1, month: 1, year: 2013 },
-    }),
-    endDateProps: new DateCustom({
-      dateCustom: { day: 1, month: 5, year: 2013 },
-    }),
-  });
+  } = UseDashboarPage({});
 
   return (
     <>
@@ -38,29 +29,21 @@ const DashboardPage = () => {
       <Row padding="5px">
         <DatePickerCustom
           value={startDate}
-          onChangeDateEvent={(date: DateCustom) => onChangeStartDate(date)}
+          onChangeDateEvent={(date: DateCustom) => {
+            onChangeStartDate(date);
+          }}
         />
-        <div>{startDateFormat}</div>
+        <div>{startDate.getFormat()}</div>
       </Row>
       <Row padding="5px">
         <DatePickerCustom
           value={endDate}
           onChangeDateEvent={(date: DateCustom) => onChangeEndDate(date)}
         />
-        <div>{endDateFormat}</div>
+        <div>{endDate.getFormat()}</div>
       </Row>
       <Row padding="5px">
-        <Link
-          href={{
-            pathname: `/map/${title}`,
-            query: {
-              startDate: startDate.toString(),
-              endDate: endDate.toString(),
-            },
-          }}
-        >
-          link
-        </Link>
+        <Link href={`/map/${title}`}>link</Link>
       </Row>
     </>
   );

@@ -1,6 +1,6 @@
 import HeatMap from '@/app/components/google-maps/heat-map';
 import Map from '@/app/components/google-maps/map';
-import useMap from './useState';
+import useMap from '../../app/utils/hooks/map/useState';
 import Head from 'next/head';
 
 interface Props {
