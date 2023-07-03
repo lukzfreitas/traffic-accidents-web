@@ -6,7 +6,7 @@ export default class Info {
   private latLng: Coordinate;
 
   constructor({ DATA_HORA, LATITUDE, LONGITUDE }: any) {
-    this.datetime = DATA_HORA;
+    this.datetime = new Date(DATA_HORA);
     this.latLng = new Coordinate(LATITUDE, LONGITUDE);
   }
 
@@ -14,7 +14,7 @@ export default class Info {
     return this.latLng;
   }
 
-  getDatetime() {
+  getDatetime(): Date {
     return this.datetime;
   }
 }

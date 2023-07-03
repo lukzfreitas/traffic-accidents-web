@@ -1,6 +1,6 @@
 'use client';
-import { useCallback, useState } from 'react';
-import { GoogleMap, useLoadScript } from '@react-google-maps/api';
+import { useCallback, useEffect, useState } from 'react';
+import { GoogleMap, LoadScript } from '@react-google-maps/api';
 
 const id = 'google-map-script';
 
@@ -13,46 +13,56 @@ interface Props {
   mapReady?: Function;
 }
 
-const Map = ({
-  center = { lat: -29.999609, lng: -51.090921 },
+const Map = ({  
   zoom = 12,
   width = '1200px',
   height = '400px',
   mapReady = () => {},
-  ..._
+  ...props
 }: Props) => {
   const googleMapsApiKey: string = process.env.GOOGLE_MAPS_API as string;
-  const { isLoaded } = useLoadScript({
-    id,
-    googleMapsApiKey,
-    libraries: ['visualization']
-  });
 
-  const [map, setMap] = useState(null);
+  const [map, setMap]: [any, Function] = useState(null);
+  const [libraries, setLibraries]: [any, Function] = useState([
+    'visualization',
+  ]);
+  const [center, setCenter]: [any, Function] = useState(
+    props.center || { lat: -29.999609, lng: -51.090921 }
+  );
+
+  useEffect(() => {
+    setCenter(center)
+  }, [center])
 
   const onLoad = useCallback(
-    (map: any) => {      
-      map.setZoom(zoom);      
-      mapReady(map);      
+    (map: google.maps.Map) => {
+      setMap(map);
+      mapReady(map);
     },
-    [zoom, mapReady],
+    [mapReady],
   );
 
   const onUnmount = useCallback((_: any) => {
     setMap(null);
   }, []);
+  
 
-  return isLoaded ? (
-    <GoogleMap
-      mapContainerStyle={{ height, width }}
-      center={center}      
-      onLoad={onLoad}
-      onUnmount={onUnmount}      
+  return (
+    <LoadScript
+      googleMapsApiKey={googleMapsApiKey}
+      libraries={libraries}
+      id={id}
     >
-      {_.children}
-    </GoogleMap>
-  ) : (
-    <p>Carregando mapa</p>
+      <GoogleMap
+        mapContainerStyle={{ height, width }}        
+        zoom={zoom}
+        center={center}        
+        onLoad={onLoad}
+        onUnmount={onUnmount}
+      >
+        {props.children}
+      </GoogleMap>
+    </LoadScript>
   );
 };
 
