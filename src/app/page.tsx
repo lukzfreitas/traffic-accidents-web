@@ -1,10 +1,8 @@
-import MapPage from "@/pages/home";
+import DashboardPage from "@/pages/dashboard";
 
-const Home = () => { 
+const Home = () => {
+  return <DashboardPage></DashboardPage>  
 
-  return (
-    <MapPage  />
-  );
 };
 
 export default Home;
